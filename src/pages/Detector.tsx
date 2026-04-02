@@ -1,9 +1,32 @@
 import React from 'react';
-import { Search, ShieldAlert, ShieldCheck, Loader2, BarChart3, AlertCircle } from 'lucide-react';
+import { Search, Loader2, BarChart3, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { detectAI } from '../lib/gemini';
+import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function Detector() {
+  usePageMeta({
+    title: 'Detector de IA Gratis | Analiza texto generado por IA | Herramientas IA Gratis',
+    description:
+      'Detecta si un texto ha sido generado por inteligencia artificial con una estimacion y explicacion clara. Analiza contenido online de forma rapida.',
+  });
+  useStructuredData('detector-page', {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Detector de IA Gratis',
+    url: 'https://inteligenciartificialgratis.es/detector-ia-gratis',
+    description:
+      'Analiza si un texto ha sido generado por inteligencia artificial con una estimacion clara.',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'es',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+    },
+  });
+
   const [text, setText] = React.useState('');
   const [result, setResult] = React.useState<{ score: number; explanation: string } | null>(null);
   const [loading, setLoading] = React.useState(false);
@@ -11,13 +34,13 @@ export default function Detector() {
   const handleDetect = async () => {
     if (!text.trim()) return;
     setLoading(true);
-    setResult(null); // Clear previous result
+    setResult(null);
     try {
       const res = await detectAI(text);
       setResult(res);
     } catch (error) {
       console.error('Detection error:', error);
-      alert('Hubo un problema al analizar el texto. Por favor, inténtalo de nuevo.');
+      alert('Hubo un problema al analizar el texto. Por favor, intentalo de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -41,7 +64,7 @@ export default function Detector() {
   return (
     <div className="space-y-12">
       <section className="text-center space-y-4">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900"
@@ -49,7 +72,7 @@ export default function Detector() {
           Detector de <span className="text-indigo-600">Contenido IA</span>
         </motion.h1>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-          Analiza cualquier texto y descubre si ha sido generado por inteligencia artificial con una puntuación de 0 a 10.
+          Analiza texto online y obtén una estimacion sobre si parece escrito por una persona o generado por inteligencia artificial.
         </p>
       </section>
 
@@ -59,21 +82,21 @@ export default function Detector() {
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Pega aquí el texto que deseas analizar (mínimo 20 caracteres)..."
+              placeholder="Pega aqui el texto que deseas analizar (minimo 20 caracteres)..."
               className="w-full h-64 p-6 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-lg"
             />
             <div className={`absolute bottom-4 right-4 text-sm font-medium ${isTooShort ? 'text-red-500' : 'text-gray-400'}`}>
               {text.length} caracteres
             </div>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <AlertCircle size={16} className={isTooShort ? 'text-red-500' : ''} />
               <span className={isTooShort ? 'text-red-500 font-medium' : ''}>
-                {isTooShort 
-                  ? `El texto es demasiado corto (mínimo ${minChars} caracteres).` 
-                  : 'Los resultados son estimaciones basadas en patrones lingüísticos.'}
+                {isTooShort
+                  ? `El texto es demasiado corto (minimo ${minChars} caracteres).`
+                  : 'Los resultados son estimaciones basadas en patrones linguisticos.'}
               </span>
             </div>
             <button
@@ -103,9 +126,9 @@ export default function Detector() {
                 <span className="text-xs font-bold uppercase">/ 10</span>
               </div>
             </div>
-            
+
             <div className="w-full bg-white/50 rounded-full h-4 overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${result.score * 10}%` }}
                 className="h-full bg-current"
@@ -115,70 +138,70 @@ export default function Detector() {
         )}
       </div>
 
-      {/* Guía de Contenido - Detección de Contenido IA */}
       <section className="mt-24 border-t border-gray-100 pt-16 space-y-12">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Detección de Contenido IA: Verificación y Calidad de Texto</h2>
-            <p className="text-gray-500">Descubre cómo el <strong>detector ia</strong> ayuda a mantener la originalidad y calidad de tu contenido.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Detector de IA para revisar probabilidad, no para dictar una verdad absoluta
+            </h2>
+            <p className="text-gray-500">
+              Esta pagina esta orientada al analisis. No traduce ni reescribe: estima si un texto muestra patrones compatibles con contenido generado por modelos de lenguaje.
+            </p>
           </header>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <article className="space-y-6">
-              <h3 className="text-2xl font-bold text-indigo-600">¿Por qué es importante verificar el contenido IA?</h3>
+              <h3 className="text-2xl font-bold text-indigo-600">Para que sirve realmente un detector de IA</h3>
               <p className="text-gray-600 leading-relaxed">
-                El uso de un <strong>detector de contenido IA</strong> se ha vuelto una herramienta fundamental para editores y creadores digitales. Si necesitas un <strong>detctor de ia</strong> confiable, nuestra plataforma analiza patrones de escritura para demostrar experiencia y autoridad. Si tu contenido es identificado como totalmente sintético, puede carecer del valor añadido que los lectores esperan.
+                Un <strong>detector de contenido IA</strong> puede ayudarte a revisar textos antes de publicarlos, auditar material recibido de terceros o detectar si una pieza necesita mas trabajo humano. Es especialmente util en entornos de edicion, educacion, marketing y revision de contenido.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Nuestra herramienta analiza patrones de <strong>perplejidad</strong> y <strong>fluidez</strong> para darte una puntuación precisa, permitiéndote ajustar el contenido para que sea más natural y atractivo.
+                Su utilidad principal no es decidir por ti, sino darte una senal orientativa basada en patrones de escritura. Eso permite revisar con mas criterio antes de dar un texto por bueno.
               </p>
             </article>
             <article className="space-y-6">
-              <h3 className="text-2xl font-bold text-indigo-600">Métricas Clave de Detección</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 text-indigo-600"><BarChart3 size={20} /></div>
-                  <p className="text-gray-600 text-sm"><strong>Predictibilidad Lingüística:</strong> Los modelos de lenguaje tienden a elegir patrones estadísticos predecibles que nuestra herramienta identifica con precisión.</p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 text-indigo-600"><BarChart3 size={20} /></div>
-                  <p className="text-gray-600 text-sm"><strong>Uniformidad de Estructura:</strong> El contenido humano varía drásticamente la longitud de sus frases; la IA suele ser demasiado constante y rítmica.</p>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 text-indigo-600"><BarChart3 size={20} /></div>
-                  <p className="text-gray-600 text-sm"><strong>Aportación de Valor Único:</strong> El contenido real suele incluir datos, experiencias o anécdotas únicas que la IA estándar no puede replicar fácilmente.</p>
-                </li>
-              </ul>
+              <h3 className="text-2xl font-bold text-indigo-600">Que analiza esta herramienta</h3>
+              <p className="text-gray-600 leading-relaxed">
+                La evaluacion se apoya en regularidad estructural, previsibilidad del lenguaje, repeticion de giros y ausencia de matices que suelen aparecer en textos demasiado sinteticos. No busca una prueba perfecta, sino un indicador practico y util para tomar decisiones.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Por eso el resultado ideal es combinar la puntuacion con lectura humana. Un score alto no significa automaticamente que el texto sea inutil; a menudo indica que necesita edicion, ejemplos propios o una voz mas personal.
+              </p>
             </article>
           </div>
 
           <div className="bg-indigo-600 text-white p-12 rounded-[3rem] relative overflow-hidden shadow-2xl">
             <div className="relative z-10 space-y-6">
-              <h3 className="text-3xl font-bold">Calidad de Contenido: El Filtro de Verificación</h3>
-              <p className="text-indigo-100 text-lg leading-relaxed">
-                No uses la IA para sustituir al redactor, úsala para potenciarlo. Una buena estrategia de <strong>marketing de contenidos</strong> implica usar la IA para la estructura, pero pasar siempre el texto por un <strong>detector de ChatGPT</strong>. Si la puntuación de IA es alta, añade más "toque humano" para asegurar que el contenido sea de alta calidad y aporte valor real.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <div className="px-6 py-2 bg-white/10 rounded-full text-sm font-bold border border-white/20">Calidad de Texto</div>
-                <div className="px-6 py-2 bg-white/10 rounded-full text-sm font-bold border border-white/20">Originalidad</div>
-                <div className="px-6 py-2 bg-white/10 rounded-full text-sm font-bold border border-white/20">Verificación IA</div>
+              <h3 className="text-3xl font-bold">Metricas clave para interpretar el resultado</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-3">
+                  <div className="text-indigo-100"><BarChart3 size={20} /></div>
+                  <h4 className="font-bold">Regularidad excesiva</h4>
+                  <p className="text-indigo-100 text-sm">Muchos textos generados por IA mantienen una cadencia demasiado estable y una estructura poco variada.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="text-indigo-100"><BarChart3 size={20} /></div>
+                  <h4 className="font-bold">Predictibilidad del lenguaje</h4>
+                  <p className="text-indigo-100 text-sm">Cuando cada frase parece la opcion estadisticamente mas probable, el texto puede sonar menos humano.</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="text-indigo-100"><BarChart3 size={20} /></div>
+                  <h4 className="font-bold">Falta de detalle propio</h4>
+                  <p className="text-indigo-100 text-sm">Los ejemplos concretos, la experiencia y el matiz personal suelen reducir la sensacion de texto sintetico.</p>
+                </div>
               </div>
             </div>
             <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
           </div>
 
           <div className="prose prose-indigo max-w-none text-gray-600">
-            <h3 className="text-2xl font-bold text-gray-900">Preguntas Frecuentes sobre el Verificador de IA</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-              <div className="space-y-2">
-                <h4 className="font-bold text-gray-800">¿Cómo mejorar la puntuación de originalidad?</h4>
-                <p className="text-sm">Usa nuestro <strong>Humanizador de Textos</strong>. Añade opiniones personales, datos específicos y rompe la monotonía gramatical característica de la IA.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-gray-800">¿Es 100% fiable la detección?</h4>
-                <p className="text-sm">Nuestra herramienta ofrece una probabilidad basada en patrones lingüísticos. Es una guía excelente para asegurar que tu contenido mantenga un estándar de calidad humano.</p>
-              </div>
-            </div>
+            <h3 className="text-2xl font-bold text-gray-900">Que hacer si la puntuacion sale alta</h3>
+            <p>
+              Si el analisis indica una probabilidad alta de texto generado por IA, no hace falta desecharlo sin mas. Lo habitual es revisar el tono, introducir datos propios, cambiar la estructura, anadir ejemplos concretos y eliminar repeticiones. Muchas veces basta con una buena capa de reescritura para mejorar notablemente la percepcion del contenido.
+            </p>
+            <p>
+              En ese caso, la herramienta complementaria natural es el humanizador. El detector te ayuda a evaluar; el humanizador te ayuda a corregir. Separar ambas funciones mejora la claridad de la arquitectura SEO y tambien la utilidad real de cada pagina.
+            </p>
           </div>
         </div>
       </section>

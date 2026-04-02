@@ -1,20 +1,44 @@
 import React from 'react';
-import { Languages, ArrowRight, Copy, Check, Loader2, Download } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Languages, Copy, Check, Loader2, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { translateText } from '../lib/gemini';
+import { usePageMeta, useStructuredData } from '../lib/seo';
 
 const languages = [
-  { code: 'es', name: 'Español' },
-  { code: 'en', name: 'Inglés' },
-  { code: 'fr', name: 'Francés' },
-  { code: 'de', name: 'Alemán' },
+  { code: 'es', name: 'Espanol' },
+  { code: 'en', name: 'Ingles' },
+  { code: 'fr', name: 'Frances' },
+  { code: 'de', name: 'Aleman' },
   { code: 'it', name: 'Italiano' },
-  { code: 'pt', name: 'Portugués' },
-  { code: 'ja', name: 'Japonés' },
+  { code: 'pt', name: 'Portugues' },
+  { code: 'ja', name: 'Japones' },
   { code: 'zh', name: 'Chino' },
 ];
 
 export default function Translator() {
+  usePageMeta({
+    title: 'Traductor IA Gratis | Traduce textos online | Herramientas IA Gratis',
+    description:
+      'Traduce textos online con IA de forma rapida y natural. Convierte contenido entre varios idiomas en segundos con nuestro traductor IA gratis.',
+  });
+  useStructuredData('translator-page', {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Traductor IA Gratis',
+    url: 'https://inteligenciartificialgratis.es/',
+    description:
+      'Traduce textos online con IA de forma rapida y natural entre varios idiomas.',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'es',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+    },
+  });
+
   const [text, setText] = React.useState('');
   const [translated, setTranslated] = React.useState('');
   const [targetLang, setTargetLang] = React.useState('en');
@@ -56,7 +80,7 @@ export default function Translator() {
   return (
     <div className="space-y-12">
       <section className="text-center space-y-4">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900"
@@ -64,19 +88,19 @@ export default function Translator() {
           Traductor de Texto con <span className="text-indigo-600">IA</span>
         </motion.h1>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-          Traducciones precisas y naturales en segundos gracias a la potencia de la IA
+          Traduce frases, parrafos y textos completos entre varios idiomas con un resultado natural, rapido y pensado para uso real en estudio, trabajo, web o ecommerce.
         </p>
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="flex items-center justify-between px-4 py-2 bg-white border border-gray-200 rounded-t-xl">
-            <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">Detectar Idioma</span>
+            <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">Texto original</span>
           </div>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Escribe o pega el texto aquí..."
+            placeholder="Escribe o pega el texto aqui..."
             className="w-full h-64 p-6 bg-white border border-gray-200 rounded-b-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none resize-none text-lg"
           />
         </div>
@@ -94,14 +118,14 @@ export default function Translator() {
             </select>
             {translated && (
               <div className="flex items-center gap-1">
-                <button 
+                <button
                   onClick={downloadTranslation}
                   title="Descargar como .txt"
                   className="p-1.5 text-gray-400 hover:text-indigo-600 transition-colors"
                 >
                   <Download size={18} />
                 </button>
-                <button 
+                <button
                   onClick={copyToClipboard}
                   title="Copiar al portapapeles"
                   className="p-1.5 text-gray-400 hover:text-indigo-600 transition-colors"
@@ -118,7 +142,7 @@ export default function Translator() {
                 Traduciendo...
               </div>
             ) : (
-              translated || <span className="text-gray-400 italic">La traducción aparecerá aquí...</span>
+              translated || <span className="text-gray-400 italic">La traduccion aparecera aqui...</span>
             )}
           </div>
         </div>
@@ -135,58 +159,77 @@ export default function Translator() {
         </button>
       </div>
 
-      {/* Guía de Contenido - Traducción de Texto con IA */}
       <section className="mt-24 border-t border-gray-100 pt-16 space-y-12">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Traducción de Texto con IA: Precisión y Contexto Global</h2>
-            <p className="text-gray-500">Optimiza tu comunicación internacional con nuestro <strong>traductor ingles</strong> y multilingüe de última generación.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Traductor IA para texto corto y largo: rapidez, contexto y lectura natural
+            </h2>
+            <p className="text-gray-500">
+              Esta herramienta esta enfocada en texto pegado directamente en pantalla: mensajes, emails, copys, articulos, descripciones de producto y contenido para web.
+            </p>
           </header>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <article className="space-y-4">
-              <h3 className="text-xl font-bold text-indigo-600">¿Qué es un Traductor de Texto con IA?</h3>
+              <h3 className="text-xl font-bold text-indigo-600">Que puedes traducir con este traductor online</h3>
               <p className="text-gray-600 leading-relaxed">
-                Un <strong>traductor de texto con IA</strong> utiliza redes neuronales profundas para procesar información. Si buscas un <strong>traductor español ingles</strong> o un <strong>traductor ingles español</strong>, nuestra herramienta entiende el contexto semántico, las metáforas y las sutilezas culturales, ofreciendo resultados naturales.
+                Nuestro <strong>traductor de texto con IA</strong> esta optimizado para texto libre. Puedes pegar una conversacion, un email profesional, una descripcion comercial, una publicacion para redes o varias secciones de un articulo. En lugar de limitarse a cambiar palabras, intenta conservar el sentido general para que el resultado no suene rigido.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Si buscas un <strong>traductor espanol ingles</strong>, <strong>traductor ingles espanol</strong> o una solucion multilingue para tu dia a dia, esta pagina esta pensada para velocidad, revision rapida y reutilizacion inmediata del texto traducido.
               </p>
             </article>
             <article className="space-y-4">
-              <h3 className="text-xl font-bold text-indigo-600">Localización de Contenido y Adaptación Cultural</h3>
+              <h3 className="text-xl font-bold text-indigo-600">Por que traducir bien no es solo cambiar palabras</h3>
               <p className="text-gray-600 leading-relaxed">
-                Para llegar a audiencias en varios países, no basta con traducir; necesitas <strong>localización de contenido</strong>. Esto implica adaptar tus mensajes al mercado local. Nuestro traductor te ayuda a mantener la intención original mientras adaptas el mensaje al público objetivo de forma natural.
+                En muchos contextos no basta con una traduccion literal. El tono, la claridad, las referencias culturales y la intencion del mensaje importan tanto como el vocabulario. Eso se nota especialmente en ecommerce, marketing, atencion al cliente y contenido educativo.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Una traduccion correcta pero fria puede sonar artificial. Una version bien adaptada, en cambio, mejora la comprension y da una sensacion de naturalidad mucho mas cercana a la de un hablante real.
               </p>
             </article>
           </div>
 
           <div className="bg-white border border-indigo-100 p-10 rounded-[2.5rem] shadow-sm space-y-8">
-            <h3 className="text-2xl font-bold text-gray-900">Optimización para Contenido Internacional</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Buenas practicas para traducir textos con mejor resultado</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <h4 className="font-bold text-indigo-600">1. Adaptación de Mensajes</h4>
-                <p className="text-sm text-gray-500">Asegura que el tono y estilo se mantengan coherentes en todas las versiones idiomáticas de tu contenido.</p>
+                <h4 className="font-bold text-indigo-600">1. Pega bloques con contexto</h4>
+                <p className="text-sm text-gray-500">Cuando el modelo ve un texto con algo de continuidad, suele entender mejor el tono y la intencion general.</p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-bold text-indigo-600">2. Estructura y Claridad</h4>
-                <p className="text-sm text-gray-500">Organiza tus textos de forma que sean fáciles de leer y entender para hablantes nativos de cualquier idioma.</p>
+                <h4 className="font-bold text-indigo-600">2. Revisa siglas y tecnicismos</h4>
+                <p className="text-sm text-gray-500">Marcas, terminos de software, nombres propios o vocabulario de nicho merecen una comprobacion final para evitar traducciones demasiado literales.</p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-bold text-indigo-600">3. Traducción de Metadatos y Títulos</h4>
-                <p className="text-sm text-gray-500">No olvides traducir los títulos y descripciones cortas, ya que son los primeros elementos que captan la atención del usuario.</p>
+                <h4 className="font-bold text-indigo-600">3. Ajusta titulares y llamadas a la accion</h4>
+                <p className="text-sm text-gray-500">Los textos cortos y visibles son donde mas se nota si una traduccion no termina de sonar natural.</p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-bold text-indigo-600">4. Contexto Regional</h4>
-                <p className="text-sm text-gray-500">Asegúrate de que las unidades de medida, formatos de fecha y referencias locales estén adaptados al país de destino.</p>
+                <h4 className="font-bold text-indigo-600">4. Localiza formatos y referencias</h4>
+                <p className="text-sm text-gray-500">Fechas, moneda, medidas y expresiones regionales influyen mucho en la sensacion de calidad del resultado final.</p>
               </div>
             </div>
           </div>
 
           <div className="prose prose-indigo max-w-none text-gray-600 space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900">Beneficios de usar nuestro Traductor Inteligente</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Cuando usar esta herramienta y cuando pasar al traductor de documentos</h3>
             <p>
-              Al utilizar nuestro <strong>traductor online gratuito</strong>, estás aprovechando la tecnología de Gemini para obtener textos fluidos. Esto es crucial para la experiencia del usuario, ya que las traducciones de alta calidad generan confianza. Un texto bien traducido mejora el compromiso y reduce el abandono de la página.
+              Este <strong>traductor online gratuito</strong> funciona especialmente bien cuando quieres trabajar rapido con texto pegado manualmente: un email, una parte de un articulo, una ficha de producto, una introduccion de landing o un mensaje de soporte. El flujo es inmediato y esta pensado para leer, revisar, copiar o descargar en el momento.
             </p>
             <p>
-              Ya sea que necesites traducir un blog post, una ficha de producto o correos electrónicos, nuestra herramienta garantiza que el contenido se integre de forma natural en el idioma de destino, facilitando tu expansión y mejorando tu visibilidad.
+              Si en cambio trabajas con archivos completos o con material largo que prefieres subir y descargar como documento, te conviene mas la seccion de documentos. Separar ambos casos hace que cada pagina responda a una intencion de busqueda diferente y que la experiencia del usuario sea mas clara.
+            </p>
+            <p>
+              Si ese es tu caso, puedes usar directamente nuestro{' '}
+              <Link to="/traductor-documentos-ia" className="text-indigo-600 font-semibold hover:text-indigo-700">
+                traductor de documentos IA
+              </Link>
+              , pensado para subir archivos TXT, traducirlos completos y descargarlos despues.
+            </p>
+            <p>
+              En resumen, esta pagina esta especializada en <strong>traduccion de texto online</strong>: rapidez, claridad y utilidad inmediata para contenido cotidiano, profesional o editorial.
             </p>
           </div>
         </div>

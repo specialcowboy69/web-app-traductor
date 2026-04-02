@@ -1,9 +1,33 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Image as ImageIcon, Download, Loader2, Wand2, AlertTriangle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { generateImageFat, getServerConfig } from '../lib/fatai';
+import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function ImageGen() {
+  usePageMeta({
+    title: 'Generador de Imagenes IA Gratis | Crea imagenes online | Herramientas IA Gratis',
+    description:
+      'Genera imagenes con IA gratis a partir de texto. Crea ilustraciones, conceptos y recursos visuales online en segundos con prompts personalizados.',
+  });
+  useStructuredData('imagegen-page', {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Generador de Imagenes IA Gratis',
+    url: 'https://inteligenciartificialgratis.es/imagenes-ia-gratis',
+    description:
+      'Genera imagenes con inteligencia artificial a partir de texto de forma online.',
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'es',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+    },
+  });
+
   const [prompt, setPrompt] = React.useState('');
   const [imageUrl, setImageUrl] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -58,15 +82,15 @@ export default function ImageGen() {
   return (
     <div className="space-y-12">
       <section className="text-center space-y-4">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900"
         >
-          Generador de <span className="text-indigo-600">Imágenes IA</span>
+          Generador de <span className="text-indigo-600">Imagenes IA</span>
         </motion.h1>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-          Convierte tus palabras en obras de arte visuales impresionantes con <strong>Flux.1 Schnell</strong>.
+          Convierte un prompt en una imagen lista para usar en posts, miniaturas, conceptos visuales, creatividades o recursos para marca.
         </p>
       </section>
 
@@ -78,11 +102,11 @@ export default function ImageGen() {
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Un astronauta montando un caballo en Marte, estilo cinematográfico, 4k..."
+                placeholder="Un astronauta montando un caballo en Marte, estilo cinematografico, 4k..."
                 className="w-full h-40 p-6 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-lg"
               />
             </div>
-            
+
             <button
               onClick={handleGenerate}
               disabled={loading || !prompt.trim() || !hasApiKey}
@@ -93,7 +117,7 @@ export default function ImageGen() {
             </button>
 
             {error && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-sm font-medium"
@@ -108,7 +132,7 @@ export default function ImageGen() {
             <div className="p-6 bg-amber-50 border border-amber-200 rounded-3xl flex items-center gap-4 text-amber-800">
               <AlertTriangle className="flex-shrink-0" />
               <p className="text-sm">
-                <strong>API Key faltante:</strong> Configura <code>FAT_AI_KEY</code> en los secretos para activar esta función.
+                <strong>API Key faltante:</strong> Configura <code>FAT_AI_KEY</code> en los secretos para activar esta funcion.
               </p>
             </div>
           )}
@@ -134,8 +158,8 @@ export default function ImageGen() {
                 <Loader2 className="absolute inset-0 m-auto animate-spin text-indigo-600 w-10 h-10" />
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-gray-900">Creando tu obra maestra...</p>
-                <p className="text-gray-500 text-sm">Usando Flux.1 Schnell para máxima velocidad</p>
+                <p className="text-xl font-bold text-gray-900">Creando tu imagen...</p>
+                <p className="text-gray-500 text-sm">Usando Flux.1 Schnell para maxima velocidad</p>
               </div>
             </div>
           ) : imageUrl ? (
@@ -154,64 +178,77 @@ export default function ImageGen() {
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-300 space-y-4">
               <ImageIcon size={80} strokeWidth={1} />
-              <p className="text-lg font-medium">Tu imagen aparecerá aquí</p>
+              <p className="text-lg font-medium">Tu imagen aparecera aqui</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Guía de Contenido - Generación de Imágenes IA */}
       <section className="mt-24 border-t border-gray-100 pt-16 space-y-12">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Generación de Imágenes IA: Creatividad y Originalidad Visual</h2>
-            <p className="text-gray-500">Maximiza el impacto de tu contenido al <strong>generar una imagen con ia</strong> única y personalizada.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Generador de imagenes IA para piezas visuales rapidas y personalizadas
+            </h2>
+            <p className="text-gray-500">
+              Esta herramienta esta enfocada en imagen fija: conceptos visuales, miniaturas, ilustraciones, mockups, ideas de branding y recursos para publicaciones.
+            </p>
           </header>
-          
+
           <div className="prose prose-indigo max-w-none text-gray-600 space-y-8">
             <p>
-              El <strong>generador de imágenes con IA</strong> no es solo una herramienta creativa; es un aliado poderoso para tu presencia digital. Si buscas una <strong>ia para generar imagenes</strong>, nuestra plataforma te permite crear recursos visuales que indican que tu sitio ofrece contenido fresco y de alta calidad.
+              Un <strong>generador de imagenes con IA</strong> es especialmente util cuando necesitas transformar una idea en un recurso visual sin depender de bancos de imagenes o procesos de diseno largos. A partir de un prompt puedes crear composiciones unicas para redes sociales, cabeceras, presentaciones, anuncios o inspiracion creativa.
             </p>
-            
+            <p>
+              A diferencia de una herramienta de video, aqui el valor esta en la velocidad de iteracion. Puedes probar variaciones de estilo, color, ambientacion o encuadre hasta encontrar una imagen que encaje con tu objetivo visual.
+            </p>
+            <p>
+              Si en lugar de una pieza estatica necesitas una escena breve con movimiento, puedes continuar en el{' '}
+              <Link to="/videos-ia-gratis" className="text-indigo-600 font-semibold hover:text-indigo-700">
+                generador de videos IA
+              </Link>
+              , que esta pensado para prompts mas narrativos y clips visuales cortos.
+            </p>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <article className="p-8 bg-indigo-50 rounded-3xl border border-indigo-100">
-                <h3 className="text-xl font-bold text-indigo-600 mb-4">Originalidad y Autoridad Visual</h3>
+                <h3 className="text-xl font-bold text-indigo-600 mb-4">Casos de uso donde mejor funciona</h3>
                 <p className="text-sm leading-relaxed">
-                  Al <strong>generar imagen ia gratis</strong> con nuestra herramienta, evitas el uso de recursos que ya están en miles de webs. Esto mejora la identidad visual de tu marca y aumenta las posibilidades de que tu contenido destaque. <strong>Generar imagen con ia gratis</strong> nunca ha sido tan sencillo y profesional.
+                  Este generador encaja muy bien para crear miniaturas, conceptos de campana, ideas para posts, ilustraciones para blog, recursos visuales para fichas de producto o piezas de apoyo para contenido editorial.
                 </p>
               </article>
               <article className="p-8 bg-indigo-50 rounded-3xl border border-indigo-100">
-                <h3 className="text-xl font-bold text-indigo-600 mb-4">Descripciones Semánticas y Accesibilidad</h3>
+                <h3 className="text-xl font-bold text-indigo-600 mb-4">Que hace un buen prompt visual</h3>
                 <p className="text-sm leading-relaxed">
-                  El prompt que utilizas para generar la imagen es una descripción semántica perfecta. Úsalo para mejorar la <strong>accesibilidad web</strong>. Incluir descripciones detalladas ayuda a los motores de búsqueda a entender el contexto visual y mejora la navegación para todos los usuarios.
+                  Cuanto mas concreto seas con estilo, plano, ambiente, iluminacion y detalle, mas control tendras sobre el resultado. Un prompt generico da imagenes genericas; un prompt bien definido suele producir piezas mucho mas aprovechables.
                 </p>
               </article>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900">Checklist de Calidad para Imágenes IA</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Checklist para obtener imagenes mas utiles</h3>
             <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm">
               <ul className="space-y-4">
                 <li className="flex gap-4">
                   <div className="w-6 h-6 bg-indigo-600 text-white rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold">1</div>
-                  <div><strong>Nombres de Archivo Descriptivos:</strong> Evita nombres genéricos. Usa términos que describan la imagen, como "astronauta-marte-estilo-cinematografico.png", para mejorar la organización.</div>
+                  <div><strong>Define el objetivo visual:</strong> no es lo mismo una imagen para inspiracion que una miniatura para captar clics o una imagen para branding.</div>
                 </li>
                 <li className="flex gap-4">
                   <div className="w-6 h-6 bg-indigo-600 text-white rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold">2</div>
-                  <div><strong>Formatos Optimizados:</strong> Utiliza formatos modernos para reducir el tiempo de carga sin perder calidad, mejorando la velocidad de respuesta de tu página.</div>
+                  <div><strong>Especifica estilo y encuadre:</strong> indicar si quieres algo fotografico, ilustrado, minimalista o cinematografico cambia mucho el resultado.</div>
                 </li>
                 <li className="flex gap-4">
                   <div className="w-6 h-6 bg-indigo-600 text-white rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold">3</div>
-                  <div><strong>Contexto Relevante:</strong> Coloca la imagen cerca de texto relacionado para que el contenido visual y escrito se complementen perfectamente.</div>
+                  <div><strong>Genera varias versiones:</strong> el mejor uso de un generador de imagenes IA esta en iterar rapido hasta llegar a una opcion realmente util.</div>
                 </li>
                 <li className="flex gap-4">
                   <div className="w-6 h-6 bg-indigo-600 text-white rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold">4</div>
-                  <div><strong>Consistencia Visual:</strong> Mantén un estilo coherente en todas tus imágenes generadas para fortalecer la identidad de tu marca o proyecto.</div>
+                  <div><strong>Revisa el uso final:</strong> piensa si la imagen va a web, redes, anuncio o video para ajustar composicion, foco y contraste.</div>
                 </li>
               </ul>
             </div>
 
             <p className="text-center text-gray-500 text-sm italic">
-              "Una imagen generada por IA aporta una autenticidad que las fotos de stock no pueden igualar."
+              "La ventaja real de una imagen generada por IA no es solo crear rapido, sino poder probar muchas ideas visuales sin friccion."
             </p>
           </div>
         </div>

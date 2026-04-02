@@ -2,8 +2,31 @@ import React from 'react';
 import { Video, Play, Loader2, AlertTriangle, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { generateVideoFat, getServerConfig } from '../lib/fatai';
+import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function VideoGen() {
+  usePageMeta({
+    title: 'Generador de Videos IA Gratis | Crea videos online | Herramientas IA Gratis',
+    description:
+      'Genera videos con IA a partir de texto y crea clips visuales online de forma sencilla. Convierte tus ideas en video con prompts personalizados.',
+  });
+  useStructuredData('videogen-page', {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Generador de Videos IA Gratis',
+    url: 'https://inteligenciartificialgratis.es/videos-ia-gratis',
+    description:
+      'Genera videos con inteligencia artificial a partir de texto y prompts personalizados.',
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'es',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'EUR',
+    },
+  });
+
   const [prompt, setPrompt] = React.useState('');
   const [videoUrl, setVideoUrl] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -49,7 +72,7 @@ export default function VideoGen() {
       setVideoUrl(url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Error al generar el video. Recuerda que la generación de video puede tardar varios minutos.');
+      setError(err.message || 'Error al generar el video. Recuerda que la generacion puede tardar varios minutos.');
     } finally {
       setLoading(false);
     }
@@ -58,7 +81,7 @@ export default function VideoGen() {
   return (
     <div className="space-y-12">
       <section className="text-center space-y-4">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900"
@@ -66,7 +89,7 @@ export default function VideoGen() {
           Generador de <span className="text-indigo-600">Video IA</span>
         </motion.h1>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-          Crea clips cinematográficos de <strong>6 segundos</strong> en <strong>1080p</strong> con <strong>LTX-2.3 (Fast)</strong>.
+          Crea clips de video a partir de texto para ideas visuales, anuncios, contenido social, storytelling corto y pruebas creativas.
         </p>
       </section>
 
@@ -76,7 +99,7 @@ export default function VideoGen() {
           <div className="space-y-2">
             <p className="text-xl font-bold text-amber-900">Se requiere una API Key de fat.ai</p>
             <p className="text-amber-800">
-              Para usar la generación de video, necesitas configurar tu FAT_AI_KEY en los secretos de la aplicación.
+              Para usar la generacion de video, necesitas configurar tu FAT_AI_KEY en los secretos de la aplicacion.
             </p>
           </div>
         </div>
@@ -85,15 +108,15 @@ export default function VideoGen() {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 shadow-sm space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-400 uppercase tracking-widest">¿Qué quieres ver?</label>
+            <label className="text-sm font-bold text-gray-400 uppercase tracking-widest">Describe tu video</label>
             <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Un dron volando sobre una ciudad futurista al atardecer, estilo cyberpunk, 4k..."
+              placeholder="Un dron volando sobre una ciudad futurista al atardecer, estilo cinematico..."
               className="w-full h-32 p-6 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-lg"
             />
           </div>
-          
+
           <button
             onClick={handleGenerate}
             disabled={loading || !prompt.trim() || !hasApiKey}
@@ -104,7 +127,7 @@ export default function VideoGen() {
           </button>
 
           {error && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-sm font-medium"
@@ -125,20 +148,20 @@ export default function VideoGen() {
               <div className="space-y-4">
                 <p className="text-2xl font-bold">Procesando tu video...</p>
                 <div className="space-y-2 text-indigo-200 text-sm max-w-md mx-auto">
-                  <p className="animate-pulse">Usando LTX-2.3 (Fast) para renderizado rápido...</p>
-                  <p className="animate-pulse delay-700">Generando 6 segundos de video en 1080p...</p>
-                  <p className="animate-pulse delay-1000">Finalizando texturas e iluminación...</p>
+                  <p className="animate-pulse">Interpretando el prompt y construyendo la escena...</p>
+                  <p className="animate-pulse delay-700">Renderizando movimiento, plano y estilo visual...</p>
+                  <p className="animate-pulse delay-1000">Preparando la version final del clip...</p>
                 </div>
-                <p className="text-xs text-gray-400 mt-4">La generación de video suele tardar entre 1 y 3 minutos.</p>
+                <p className="text-xs text-gray-400 mt-4">La generacion de video suele tardar entre 1 y 3 minutos.</p>
               </div>
             </div>
           ) : videoUrl ? (
             <div className="relative w-full h-full group">
-              <video 
-                src={videoUrl} 
-                controls 
-                autoPlay 
-                loop 
+              <video
+                src={videoUrl}
+                controls
+                autoPlay
+                loop
                 className="w-full h-full object-contain"
               />
               <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -156,69 +179,75 @@ export default function VideoGen() {
               <div className="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center text-indigo-500">
                 <Play size={40} fill="currentColor" />
               </div>
-              <p className="text-lg font-medium">Tu video aparecerá aquí</p>
+              <p className="text-lg font-medium">Tu video aparecera aqui</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Guía de Contenido - Generación de Video con IA */}
       <section className="mt-24 border-t border-gray-100 pt-16 space-y-12">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Generación de Video IA: Impacto y Engagement Audiovisual</h2>
-            <p className="text-gray-500">Descubre cómo el video generado por IA revoluciona la comunicación y el interés de tu audiencia.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Generador de video IA para clips cortos, visuales y exploracion creativa
+            </h2>
+            <p className="text-gray-500">
+              Esta pagina esta especializada en video generado desde prompt, no en imagen fija. Su utilidad principal es convertir una idea en una escena breve con movimiento.
+            </p>
           </header>
-          
+
           <div className="prose prose-indigo max-w-none text-gray-600 space-y-8">
             <p>
-              El contenido audiovisual es el formato más potente para captar la atención. Al utilizar un <strong>generador de video de texto</strong>, puedes crear contenido dinámico y atractivo que destaque en cualquier plataforma digital, mejorando la retención y el interés de tus usuarios.
+              Un <strong>generador de video de texto</strong> es util cuando quieres visualizar una escena, una atmosfera o una accion y necesitas algo mas que una sola imagen. El video permite mostrar movimiento, encuadre, ritmo y una sensacion mas cinematografica de la idea.
             </p>
-            
+            <p>
+              Por eso esta herramienta tiene una intencion diferente a la de imagenes: aqui el objetivo no es tanto conseguir una pieza estatica perfecta, sino crear un clip corto que sirva para experimentar conceptos, presentar ideas, preparar creatividades o generar contenido visual llamativo.
+            </p>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <article className="p-8 bg-gray-900 text-white rounded-3xl shadow-xl">
-                <h3 className="text-xl font-bold text-indigo-400 mb-4">Aumento del Tiempo de Permanencia</h3>
+                <h3 className="text-xl font-bold text-indigo-400 mb-4">Donde encaja mejor un video IA</h3>
                 <p className="text-sm text-gray-300 leading-relaxed">
-                  Un video atractivo puede retener a un usuario en tu página durante más tiempo, lo que indica que tu contenido es valioso y relevante. Los <strong>clips de video para redes sociales</strong> generados con IA son ideales para captar la atención de forma inmediata y efectiva.
+                  Funciona especialmente bien para ideas de anuncios, visuales para redes sociales, mood videos, storytelling breve, pruebas de concepto y piezas que necesitan impacto rapido.
                 </p>
               </article>
               <article className="p-8 bg-gray-900 text-white rounded-3xl shadow-xl">
-                <h3 className="text-xl font-bold text-indigo-400 mb-4">Contenido Enriquecido y Visibilidad</h3>
+                <h3 className="text-xl font-bold text-indigo-400 mb-4">Que cambia respecto a una imagen</h3>
                 <p className="text-sm text-gray-300 leading-relaxed">
-                  Los videos generados pueden subirse a plataformas como YouTube y embeberse en tu web. Esto te permite ofrecer una experiencia multimedia completa, aumentando la visibilidad de tu marca y mejorando la tasa de clics (CTR) en tus publicaciones.
+                  En video importa no solo el aspecto visual, sino tambien la accion, el recorrido de camara, el ambiente y la coherencia del movimiento. Eso hace que el prompt deba ser mas narrativo.
                 </p>
               </article>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900">Estrategias para Maximizar el Impacto del Video IA</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Buenas practicas para obtener videos mas aprovechables</h3>
             <div className="space-y-8">
               <div className="flex gap-6 items-start">
                 <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0 font-black text-xl shadow-sm">1</div>
                 <div>
-                  <h4 className="text-xl font-bold text-gray-900">Uso de Datos Estructurados</h4>
-                  <p className="text-base">Utiliza etiquetas descriptivas para que los sistemas de búsqueda entiendan exactamente de qué trata tu video. Incluye títulos claros, descripciones detalladas y miniaturas atractivas para facilitar su descubrimiento.</p>
+                  <h4 className="text-xl font-bold text-gray-900">Describe accion y camara</h4>
+                  <p className="text-base">Indicar que ocurre, desde que angulo se ve y como se mueve la escena suele mejorar mucho el resultado frente a prompts puramente descriptivos.</p>
                 </div>
               </div>
               <div className="flex gap-6 items-start">
                 <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0 font-black text-xl shadow-sm">2</div>
                 <div>
-                  <h4 className="text-xl font-bold text-gray-900">Transcripciones y Accesibilidad</h4>
-                  <p className="text-base">Proporcionar la transcripción del video no solo mejora la accesibilidad, sino que también permite que el contenido sea más fácil de encontrar a través de búsquedas de texto relacionadas con los temas tratados.</p>
+                  <h4 className="text-xl font-bold text-gray-900">Piensa en clips breves con objetivo claro</h4>
+                  <p className="text-base">El video corto rinde mejor cuando cada escena tiene una idea visual concreta: una accion, una emocion o una situacion facilmente entendible.</p>
                 </div>
               </div>
               <div className="flex gap-6 items-start">
                 <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0 font-black text-xl shadow-sm">3</div>
                 <div>
-                  <h4 className="text-xl font-bold text-gray-900">Miniaturas de Alto Impacto</h4>
-                  <p className="text-base">Crea miniaturas impactantes con nuestro <strong>Generador de Imágenes IA</strong>. Una imagen de portada bien diseñada puede aumentar drásticamente el interés y los clics desde cualquier buscador de videos.</p>
+                  <h4 className="text-xl font-bold text-gray-900">Usa imagenes para complementar, no para sustituir</h4>
+                  <p className="text-base">La herramienta de imagenes sigue siendo mejor para miniaturas o artes finales. El video es ideal cuando necesitas movimiento y sensacion narrativa.</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-indigo-50 p-10 rounded-[2.5rem] border border-indigo-100 mt-10">
-              <h3 className="text-2xl font-bold text-indigo-900 mb-4 text-center">Optimización del Rendimiento Web</h3>
+              <h3 className="text-2xl font-bold text-indigo-900 mb-4 text-center">Una pagina distinta para una necesidad distinta</h3>
               <p className="text-center text-indigo-800 max-w-2xl mx-auto">
-                Asegúrate de que tus videos no ralenticen la carga de la página. Utiliza técnicas de carga diferida (Lazy Loading) y aloja los archivos en plataformas optimizadas para mantener una velocidad de navegación fluida y satisfactoria.
+                Separar video e imagen ayuda tanto al usuario como al SEO. Quien busca crear un clip desde un prompt tiene una intencion diferente a quien solo necesita una imagen estatica, y esta pagina esta enfocada especificamente en esa necesidad.
               </p>
             </div>
           </div>

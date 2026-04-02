@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from 'motion/react';
 
 const navItems = [
   { path: '/', label: 'Traductor', icon: Languages },
-  { path: '/documentos', label: 'Documentos', icon: FileText },
-  { path: '/humanizar', label: 'Humanizar', icon: UserCheck },
-  { path: '/detector', label: 'Detector IA', icon: Search },
-  { path: '/imagenes', label: 'Imágenes', icon: ImageIcon },
-  { path: '/videos', label: 'Videos', icon: Video },
+  { path: '/traductor-documentos-ia', label: 'Documentos', icon: FileText },
+  { path: '/humanizar-textos-ia', label: 'Humanizar', icon: UserCheck },
+  { path: '/detector-ia-gratis', label: 'Detector IA', icon: Search },
+  { path: '/imagenes-ia-gratis', label: 'Imagenes', icon: ImageIcon },
+  { path: '/videos-ia-gratis', label: 'Videos', icon: Video },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -30,7 +30,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -40,8 +39,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     key={item.path}
                     to={item.path}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                      isActive 
-                        ? 'bg-indigo-50 text-indigo-600' 
+                      isActive
+                        ? 'bg-indigo-50 text-indigo-600'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >
@@ -52,7 +51,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               })}
             </nav>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -64,7 +62,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -83,8 +80,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
                       className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium ${
-                        isActive 
-                          ? 'bg-indigo-50 text-indigo-600' 
+                        isActive
+                          ? 'bg-indigo-50 text-indigo-600'
                           : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                       }`}
                     >
@@ -109,16 +106,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="text-lg font-bold text-indigo-600 mb-4">Herramientas IA Gratis</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
-                Potenciando tu creatividad y productividad con las últimas herramientas de inteligencia artificial.
-                Traducción, humanización, detección y generación en un solo lugar.
+                Potenciando tu creatividad y productividad con las ultimas herramientas de inteligencia artificial.
+                Traduccion, humanizacion, deteccion y generacion en un solo lugar.
               </p>
             </div>
             <div>
               <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Herramientas</h4>
               <ul className="space-y-2 text-sm text-gray-500">
-                {navItems.map(item => (
+                {navItems.map((item) => (
                   <li key={item.path}>
-                    <Link to={item.path} className="hover:text-indigo-600 transition-colors">{item.label}</Link>
+                    <Link to={item.path} className="hover:text-indigo-600 transition-colors">
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -127,7 +126,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-gray-500">
                 <li><a href="#" className="hover:text-indigo-600 transition-colors">Privacidad</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Términos</a></li>
+                <li><a href="#" className="hover:text-indigo-600 transition-colors">Terminos</a></li>
                 <li><a href="#" className="hover:text-indigo-600 transition-colors">Contacto</a></li>
               </ul>
             </div>
