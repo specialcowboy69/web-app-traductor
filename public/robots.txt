@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Allow: /traductor-documentos-ia
+Allow: /humanizar-textos-ia
+Allow: /detector-ia-gratis
+Allow: /imagenes-ia-gratis
+Allow: /videos-ia-gratis
 
 Sitemap: https://inteligenciartificialgratis.es/sitemap.xml
