@@ -22,11 +22,11 @@ app.use((req, res, next) => {
       "Content-Security-Policy",
       [
         "default-src 'self'",
-        "script-src 'self'",
+        "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
         "style-src 'self' 'unsafe-inline'",
         "img-src 'self' data: https:",
         "media-src 'self' blob: https:",
-        "connect-src 'self' https://fal.run https://generativelanguage.googleapis.com",
+        "connect-src 'self' https://fal.run https://generativelanguage.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com",
         "font-src 'self' data:",
         "object-src 'none'",
         "base-uri 'self'",
