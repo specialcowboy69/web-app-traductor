@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Languages, FileText, UserCheck, Search, Image as ImageIcon, Video, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { trackEvent } from '../lib/analytics';
 
 const navItems = [
   { path: '/', label: 'Traductor', icon: Languages },
@@ -22,7 +23,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tight text-indigo-600">
+              <Link
+                to="/"
+                className="flex items-center gap-2 text-xl font-bold tracking-tight text-indigo-600"
+                onClick={() => trackEvent('nav_click', {
+                  nav_location: 'header_logo',
+                  target_path: '/',
+                })}
+              >
                 <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
                   <Languages size={20} />
                 </div>
@@ -38,6 +46,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.path}
                     to={item.path}
+                    onClick={() => trackEvent('nav_click', {
+                      nav_location: 'header_desktop',
+                      target_path: item.path,
+                      target_label: item.label,
+                    })}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                       isActive
                         ? 'bg-indigo-50 text-indigo-600'
@@ -78,7 +91,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <Link
                       key={item.path}
                       to={item.path}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={() => {
+                        trackEvent('nav_click', {
+                          nav_location: 'header_mobile',
+                          target_path: item.path,
+                          target_label: item.label,
+                        });
+                        setIsMenuOpen(false);
+                      }}
                       className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium ${
                         isActive
                           ? 'bg-indigo-50 text-indigo-600'
@@ -115,7 +135,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-2 text-sm text-gray-500">
                 {navItems.map((item) => (
                   <li key={item.path}>
-                    <Link to={item.path} className="hover:text-indigo-600 transition-colors">
+                    <Link
+                      to={item.path}
+                      className="hover:text-indigo-600 transition-colors"
+                      onClick={() => trackEvent('nav_click', {
+                        nav_location: 'footer_tools',
+                        target_path: item.path,
+                        target_label: item.label,
+                      })}
+                    >
                       {item.label}
                     </Link>
                   </li>

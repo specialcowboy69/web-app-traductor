@@ -2,6 +2,7 @@ import React from 'react';
 import { Search, Loader2, BarChart3, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { detectAI } from '../lib/gemini';
+import { trackEvent } from '../lib/analytics';
 import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function Detector() {
@@ -33,6 +34,10 @@ export default function Detector() {
 
   const handleDetect = async () => {
     if (!text.trim()) return;
+    trackEvent('detect_click', {
+      tool_name: 'detector',
+      has_text: true,
+    });
     setLoading(true);
     setResult(null);
     try {

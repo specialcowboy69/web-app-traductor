@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Sparkles, Copy, Check, Loader2, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { humanizeText } from '../lib/gemini';
+import { trackEvent } from '../lib/analytics';
 import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function Humanizer() {
@@ -35,6 +36,10 @@ export default function Humanizer() {
 
   const handleHumanize = async () => {
     if (!text.trim()) return;
+    trackEvent('humanize_click', {
+      tool_name: 'humanizer',
+      has_text: true,
+    });
     setLoading(true);
     try {
       const res = await humanizeText(text);
@@ -48,12 +53,19 @@ export default function Humanizer() {
   };
 
   const copyToClipboard = () => {
+    trackEvent('copy_result_click', {
+      tool_name: 'humanizer',
+    });
     navigator.clipboard.writeText(humanized);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const downloadHumanized = () => {
+    trackEvent('download_result_click', {
+      tool_name: 'humanizer',
+      file_type: 'txt',
+    });
     const blob = new Blob([humanized], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -208,11 +220,18 @@ export default function Humanizer() {
                 Si quieres cambiar de idioma, lo correcto es usar el traductor. Si quieres estimar si un contenido parece generado por IA, la herramienta adecuada es el detector. Si lo que buscas es mejorar la voz del texto para que se lea mejor y parezca menos mecanico, entonces esta pagina es la mas adecuada.
               </p>
               <p>
-                Si antes de reescribir quieres comprobar la probabilidad de que un texto sea sintetico, puedes pasar primero por el{' '}
-                <Link to="/detector-ia-gratis" className="text-indigo-600 font-semibold hover:text-indigo-700">
+                Si quieres comprobar primero el analisis del texto, puedes abrir el{' '}
+                <Link
+                  to="/detector-ia-gratis"
+                  className="text-indigo-600 font-semibold hover:text-indigo-700"
+                  onClick={() => trackEvent('internal_link_click', {
+                    source_tool: 'humanizer',
+                    target_tool: 'detector',
+                    link_name: 'detector_ia',
+                  })}
+                >
                   detector de IA gratis
                 </Link>
-                {' '}y despues volver aqui para pulir el resultado.
               </p>
               <p>
                 Esa diferenciacion es importante tanto para el usuario como para SEO: cada herramienta responde a una necesidad distinta y por eso conviene que el contenido de cada pagina sea realmente especifico.

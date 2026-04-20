@@ -2,6 +2,7 @@ import React from 'react';
 import { FileText, Upload, Languages, Loader2, Download, Check } from 'lucide-react';
 import { motion } from 'motion/react';
 import { translateText } from '../lib/gemini';
+import { trackEvent } from '../lib/analytics';
 import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function DocTranslator() {
@@ -40,6 +41,10 @@ export default function DocTranslator() {
         alert('Por favor, sube solo archivos de texto (.txt)');
         return;
       }
+      trackEvent('file_upload_click', {
+        tool_name: 'doc_translator',
+        file_type: 'txt',
+      });
       setFile(selectedFile);
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -51,6 +56,11 @@ export default function DocTranslator() {
 
   const handleTranslate = async () => {
     if (!content) return;
+    trackEvent('document_translate_click', {
+      tool_name: 'doc_translator',
+      target_language: targetLang,
+      has_file: true,
+    });
     setLoading(true);
     try {
       const res = await translateText(content, targetLang);
@@ -64,6 +74,10 @@ export default function DocTranslator() {
   };
 
   const downloadFile = () => {
+    trackEvent('download_result_click', {
+      tool_name: 'doc_translator',
+      file_type: 'txt',
+    });
     const blob = new Blob([translated], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Image as ImageIcon, Download, Loader2, Wand2, AlertTriangle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { generateImageFat, getServerConfig } from '../lib/fatai';
+import { trackEvent } from '../lib/analytics';
 import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function ImageGen() {
@@ -56,6 +57,10 @@ export default function ImageGen() {
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
+    trackEvent('image_generate_click', {
+      tool_name: 'image_generator',
+      has_prompt: true,
+    });
     setLoading(true);
     setImageUrl('');
     setError(null);
@@ -71,6 +76,10 @@ export default function ImageGen() {
   };
 
   const downloadImage = () => {
+    trackEvent('download_result_click', {
+      tool_name: 'image_generator',
+      file_type: 'png',
+    });
     const a = document.createElement('a');
     a.href = imageUrl;
     a.download = `generada_${Date.now()}.png`;
@@ -142,6 +151,10 @@ export default function ImageGen() {
               <button
                 key={suggestion}
                 onClick={() => setPrompt(suggestion)}
+                onClickCapture={() => trackEvent('sample_prompt_click', {
+                  tool_name: 'image_generator',
+                  prompt_name: suggestion,
+                })}
                 className="p-4 bg-white border border-gray-100 rounded-2xl text-sm text-gray-500 hover:border-indigo-300 hover:text-indigo-600 transition-all text-left"
               >
                 {suggestion}
@@ -203,11 +216,18 @@ export default function ImageGen() {
               A diferencia de una herramienta de video, aqui el valor esta en la velocidad de iteracion. Puedes probar variaciones de estilo, color, ambientacion o encuadre hasta encontrar una imagen que encaje con tu objetivo visual.
             </p>
             <p>
-              Si en lugar de una pieza estatica necesitas una escena breve con movimiento, puedes continuar en el{' '}
-              <Link to="/videos-ia-gratis" className="text-indigo-600 font-semibold hover:text-indigo-700">
+              Si lo que necesitas es movimiento y una escena breve, puedes continuar en el{' '}
+              <Link
+                to="/videos-ia-gratis"
+                className="text-indigo-600 font-semibold hover:text-indigo-700"
+                onClick={() => trackEvent('internal_link_click', {
+                  source_tool: 'image_generator',
+                  target_tool: 'video_generator',
+                  link_name: 'generador_videos',
+                })}
+              >
                 generador de videos IA
               </Link>
-              , que esta pensado para prompts mas narrativos y clips visuales cortos.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

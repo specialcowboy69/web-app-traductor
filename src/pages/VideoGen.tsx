@@ -2,6 +2,7 @@ import React from 'react';
 import { Video, Play, Loader2, AlertTriangle, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { generateVideoFat, getServerConfig } from '../lib/fatai';
+import { trackEvent } from '../lib/analytics';
 import { usePageMeta, useStructuredData } from '../lib/seo';
 
 export default function VideoGen() {
@@ -34,6 +35,10 @@ export default function VideoGen() {
   const [error, setError] = React.useState<string | null>(null);
 
   const downloadVideo = () => {
+    trackEvent('download_result_click', {
+      tool_name: 'video_generator',
+      file_type: 'mp4',
+    });
     const a = document.createElement('a');
     a.href = videoUrl;
     a.download = `video_ia_${Date.now()}.mp4`;
@@ -64,6 +69,10 @@ export default function VideoGen() {
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
+    trackEvent('video_generate_click', {
+      tool_name: 'video_generator',
+      has_prompt: true,
+    });
     setLoading(true);
     setVideoUrl('');
     setError(null);

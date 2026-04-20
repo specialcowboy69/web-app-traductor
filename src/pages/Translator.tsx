@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Languages, Copy, Check, Loader2, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { translateText } from '../lib/gemini';
+import { trackEvent } from '../lib/analytics';
 import { usePageMeta, useStructuredData } from '../lib/seo';
 
 const languages = [
@@ -47,6 +48,11 @@ export default function Translator() {
 
   const handleTranslate = async () => {
     if (!text.trim()) return;
+    trackEvent('translate_click', {
+      tool_name: 'translator',
+      target_language: targetLang,
+      has_text: true,
+    });
     setLoading(true);
     try {
       const res = await translateText(text, targetLang);
@@ -60,12 +66,19 @@ export default function Translator() {
   };
 
   const copyToClipboard = () => {
+    trackEvent('copy_result_click', {
+      tool_name: 'translator',
+    });
     navigator.clipboard.writeText(translated);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const downloadTranslation = () => {
+    trackEvent('download_result_click', {
+      tool_name: 'translator',
+      file_type: 'txt',
+    });
     const blob = new Blob([translated], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -222,11 +235,18 @@ export default function Translator() {
               Si en cambio trabajas con archivos completos o con material largo que prefieres subir y descargar como documento, te conviene mas la seccion de documentos. Separar ambos casos hace que cada pagina responda a una intencion de busqueda diferente y que la experiencia del usuario sea mas clara.
             </p>
             <p>
-              Si ese es tu caso, puedes usar directamente nuestro{' '}
-              <Link to="/traductor-documentos-ia" className="text-indigo-600 font-semibold hover:text-indigo-700">
+              Si trabajas mas a menudo con archivos completos, puedes pasar directamente al{' '}
+              <Link
+                to="/traductor-documentos-ia"
+                className="text-indigo-600 font-semibold hover:text-indigo-700"
+                onClick={() => trackEvent('internal_link_click', {
+                  source_tool: 'translator',
+                  target_tool: 'doc_translator',
+                  link_name: 'traductor_documentos',
+                })}
+              >
                 traductor de documentos IA
               </Link>
-              , pensado para subir archivos TXT, traducirlos completos y descargarlos despues.
             </p>
             <p>
               En resumen, esta pagina esta especializada en <strong>traduccion de texto online</strong>: rapidez, claridad y utilidad inmediata para contenido cotidiano, profesional o editorial.
