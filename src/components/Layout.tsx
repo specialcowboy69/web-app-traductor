@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Languages, FileText, UserCheck, Search, Image as ImageIcon, Video, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { trackEvent } from '../lib/analytics';
+import CookieBanner from './CookieBanner';
+import { useConsent } from '../lib/consent';
 
 const navItems = [
   { path: '/', label: 'Traductor', icon: Languages },
@@ -16,6 +18,7 @@ const navItems = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
+  const { openPreferences } = useConsent();
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#1a1a1a] font-sans">
@@ -153,9 +156,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-gray-500">
+                <li>
+                  <Link to="/politica-de-cookies" className="hover:text-indigo-600 transition-colors">
+                    Politica de cookies
+                  </Link>
+                </li>
                 <li><a href="#" className="hover:text-indigo-600 transition-colors">Privacidad</a></li>
                 <li><a href="#" className="hover:text-indigo-600 transition-colors">Terminos</a></li>
                 <li><a href="#" className="hover:text-indigo-600 transition-colors">Contacto</a></li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={openPreferences}
+                    className="hover:text-indigo-600 transition-colors"
+                  >
+                    Configurar cookies
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -164,6 +181,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      <CookieBanner />
     </div>
   );
 }

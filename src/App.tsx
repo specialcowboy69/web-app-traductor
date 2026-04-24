@@ -6,6 +6,7 @@ import Humanizer from './pages/Humanizer';
 import Detector from './pages/Detector';
 import ImageGen from './pages/ImageGen';
 import VideoGen from './pages/VideoGen';
+import CookiesPolicy from './pages/CookiesPolicy';
 import { useStructuredData } from './lib/seo';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/detector-ia-gratis" element={<Detector />} />
           <Route path="/imagenes-ia-gratis" element={<ImageGen />} />
           <Route path="/videos-ia-gratis" element={<VideoGen />} />
+          <Route path="/politica-de-cookies" element={<CookiesPolicy />} />
         </Routes>
       </Layout>
     </Router>
