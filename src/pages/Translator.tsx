@@ -24,6 +24,41 @@ const languages = [
   { code: 'zh', name: 'Chino' },
 ];
 
+const recommendedBooks = [
+  {
+    title: 'Aprender ingles para adultos principiantes',
+    author: 'ExploreToWin',
+    description:
+      'Una opcion pensada para empezar desde cero, ganar vocabulario basico y practicar estructuras utiles sin complicarse con teoria excesiva.',
+    image: '/affiliate-books/aprender-ingles-adultos-principiantes.jpg',
+    affiliateUrl: 'https://amzn.to/4mYGMdb',
+  },
+  {
+    title: "El metodo Charly's Way",
+    author: 'Charly Londono',
+    description:
+      'Muy recomendable si te interesa trabajar pronunciacion, comprension auditiva y expresiones mas cercanas al ingles real de viaje y conversacion.',
+    image: '/affiliate-books/el-metodo-charlys-way.jpg',
+    affiliateUrl: 'https://amzn.to/420sHCu',
+  },
+  {
+    title: 'Aprender ingles en 30 dias',
+    author: 'Dorian Priest y Angela Coppola',
+    description:
+      'Formato practico para quienes quieren combinar gramatica, frases, conversaciones y lectura guiada en un mismo recurso.',
+    image: '/affiliate-books/aprender-ingles-en-30-dias.jpg',
+    affiliateUrl: 'https://amzn.to/4cLgXsg',
+  },
+  {
+    title: '101 truquitos para speak English',
+    author: 'Maria G. Duran',
+    description:
+      'Ideal para reforzar el ingles cotidiano con consejos rapidos, giros utiles y una explicacion mas ligera y visual.',
+    image: '/affiliate-books/101-truquitos-speak-english.jpg',
+    affiliateUrl: 'https://amzn.to/4vZ6TF3',
+  },
+];
+
 export default function Translator() {
   usePageMeta({
     title: 'Traductor IA Gratis | Traduce textos online | Herramientas IA Gratis',
@@ -178,6 +213,61 @@ export default function Translator() {
           Traducir Ahora
         </button>
       </div>
+
+      <section className="bg-white border border-amber-100 rounded-[2.5rem] p-8 md:p-10 shadow-sm space-y-8">
+        <div className="max-w-3xl mx-auto text-center space-y-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Libros recomendados para aprender ingles mejor
+          </h2>
+          <p className="text-gray-600 leading-relaxed">
+            Si ademas de traducir quieres mejorar vocabulario, comprension y soltura al hablar, aqui tienes una pequena seleccion de libros que encajan muy bien con el uso de esta herramienta.
+          </p>
+          <p className="text-sm text-gray-500">
+            Como afiliados de Amazon, podemos recibir ingresos por las compras adscritas que cumplan los requisitos aplicables.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          {recommendedBooks.map((book) => (
+            <article
+              key={book.title}
+              className="flex flex-col overflow-hidden rounded-[2rem] border border-gray-200 bg-gradient-to-b from-white to-amber-50/40 shadow-sm"
+            >
+              <div className="aspect-[4/5] overflow-hidden bg-gray-100">
+                <img
+                  src={book.image}
+                  alt={`Portada de ${book.title}`}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-5 space-y-3">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-bold text-gray-900 leading-snug">{book.title}</h3>
+                  <p className="text-sm font-medium text-indigo-600">{book.author}</p>
+                </div>
+                <p className="text-sm text-gray-600 leading-relaxed flex-1">{book.description}</p>
+                <a
+                  href={book.affiliateUrl}
+                  target="_blank"
+                  rel="sponsored noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-amber-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-amber-600"
+                  onClick={() =>
+                    trackEvent('affiliate_click', {
+                      affiliate_program: 'amazon',
+                      affiliate_category: 'books',
+                      item_name: book.title,
+                      source_tool: 'translator',
+                    })
+                  }
+                >
+                  Ver libro en Amazon
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="mt-24 border-t border-gray-100 pt-16 space-y-12">
         <div className="max-w-4xl mx-auto space-y-12">
