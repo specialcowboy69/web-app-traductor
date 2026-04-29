@@ -13,6 +13,13 @@ const languages = [
   { code: 'de', name: 'Aleman' },
   { code: 'it', name: 'Italiano' },
   { code: 'pt', name: 'Portugues' },
+  { code: 'tr', name: 'Turco' },
+  { code: 'nl', name: 'Neerlandes' },
+  { code: 'ar', name: 'Arabe' },
+  { code: 'ru', name: 'Ruso' },
+  { code: 'ko', name: 'Coreano' },
+  { code: 'hi', name: 'Hindi' },
+  { code: 'pl', name: 'Polaco' },
   { code: 'ja', name: 'Japones' },
   { code: 'zh', name: 'Chino' },
 ];

@@ -154,6 +154,15 @@ export default function DocTranslator() {
                 <option value="German">Aleman</option>
                 <option value="Italian">Italiano</option>
                 <option value="Portuguese">Portugues</option>
+                <option value="Turkish">Turco</option>
+                <option value="Dutch">Neerlandes</option>
+                <option value="Arabic">Arabe</option>
+                <option value="Russian">Ruso</option>
+                <option value="Korean">Coreano</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Polish">Polaco</option>
+                <option value="Japanese">Japones</option>
+                <option value="Chinese">Chino</option>
               </select>
             </div>
 
