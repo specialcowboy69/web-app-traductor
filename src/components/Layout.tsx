@@ -24,6 +24,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     trackPageView(`${location.pathname}${location.search}`);
   }, [location.pathname, location.search]);
 
+  React.useEffect(() => {
+    const trackCurrentPage = () => {
+      trackPageView(`${location.pathname}${location.search}`);
+    };
+
+    window.addEventListener('analytics-consent-granted', trackCurrentPage);
+    return () => {
+      window.removeEventListener('analytics-consent-granted', trackCurrentPage);
+    };
+  }, [location.pathname, location.search]);
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#1a1a1a] font-sans">
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">

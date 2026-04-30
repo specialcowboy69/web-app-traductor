@@ -3,6 +3,7 @@ import React from 'react';
 const CONSENT_COOKIE_NAME = 'site_consent';
 const GA_MEASUREMENT_ID = 'G-0TJ7ELB5DC';
 const GA_SCRIPT_ID = 'ga4-script';
+const ANALYTICS_GRANTED_EVENT = 'analytics-consent-granted';
 
 type ConsentState = {
   necessary: true;
@@ -116,7 +117,7 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
     setIsBannerOpen(!stored);
   }, []);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!consent || typeof window.gtag !== 'function') return;
 
     if (consent.analytics) {
@@ -126,6 +127,7 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
         ad_user_data: 'denied',
         ad_personalization: 'denied',
       });
+      window.dispatchEvent(new Event(ANALYTICS_GRANTED_EVENT));
     } else {
       removeAnalyticsRuntime();
     }

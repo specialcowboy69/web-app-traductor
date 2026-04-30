@@ -1,4 +1,5 @@
 type AnalyticsParams = Record<string, string | number | boolean | undefined>;
+const GA_MEASUREMENT_ID = 'G-0TJ7ELB5DC';
 
 declare global {
   interface Window {
@@ -22,7 +23,8 @@ export function trackPageView(path: string, title = document.title) {
     return;
   }
 
-  window.gtag('event', 'page_view', {
+  window.gtag('config', GA_MEASUREMENT_ID, {
+    send_page_view: true,
     page_title: title,
     page_location: window.location.href,
     page_path: path,
