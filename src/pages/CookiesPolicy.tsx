@@ -50,7 +50,7 @@ export default function CookiesPolicy() {
 
           <h3 className="text-xl font-bold text-indigo-600">2. Cookies analiticas</h3>
           <p>
-            Solo se cargan si aceptas expresamente las cookies analiticas en el banner o en la configuracion de cookies. Estas cookies se usan para medir visitas, navegacion, paginas vistas, clics y eventos relacionados con el uso de las herramientas.
+            Solo se almacenan si aceptas expresamente las cookies analiticas en el banner o en la configuracion de cookies. Estas cookies se usan para medir visitas, navegacion, paginas vistas, clics y eventos relacionados con el uso de las herramientas.
           </p>
           <p>
             Actualmente usamos <strong>Google Analytics</strong> para medir el uso del sitio y entender que herramientas interesan mas a los usuarios, que botones reciben mas clics y como mejorar la experiencia general.
@@ -58,10 +58,10 @@ export default function CookiesPolicy() {
 
           <h2 className="text-2xl font-bold text-gray-900">Base de funcionamiento del consentimiento</h2>
           <p>
-            Cuando entras por primera vez en la web, se muestra un banner de cookies. Desde ese banner puedes aceptar las cookies analiticas, rechazarlas o configurar tu preferencia. Si no aceptas las cookies analiticas, Google Analytics no se carga.
+            Cuando entras por primera vez en la web, se muestra un banner de cookies. Desde ese banner puedes aceptar las cookies analiticas, rechazarlas o configurar tu preferencia. Si no aceptas las cookies analiticas, Google Analytics funciona con el consentimiento de analitica denegado y no debe almacenar cookies analiticas en tu navegador.
           </p>
           <p>
-            Si aceptas las cookies analiticas, se activa Google Analytics y pueden registrarse eventos de uso como clics en botones principales, descargas o navegacion entre secciones. Si posteriormente retiras tu consentimiento, dejamos de cargar Analytics y eliminamos las cookies analiticas conocidas de Google Analytics en el navegador.
+            Si aceptas las cookies analiticas, se concede el consentimiento de analitica a Google Analytics y pueden registrarse eventos de uso como clics en botones principales, descargas o navegacion entre secciones. Si posteriormente retiras tu consentimiento, volvemos a denegar el consentimiento de analitica y eliminamos las cookies analiticas conocidas de Google Analytics en el navegador.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900">Como puedes cambiar tu eleccion</h2>

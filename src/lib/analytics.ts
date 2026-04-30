@@ -16,3 +16,15 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}) {
     ...params,
   });
 }
+
+export function trackPageView(path: string, title = document.title) {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') {
+    return;
+  }
+
+  window.gtag('event', 'page_view', {
+    page_title: title,
+    page_location: window.location.href,
+    page_path: path,
+  });
+}

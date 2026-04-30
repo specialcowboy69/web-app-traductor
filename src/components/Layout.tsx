@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Languages, FileText, UserCheck, Search, Image as ImageIcon, Video, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { trackEvent } from '../lib/analytics';
+import { trackEvent, trackPageView } from '../lib/analytics';
 import CookieBanner from './CookieBanner';
 import { useConsent } from '../lib/consent';
 
@@ -19,6 +19,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
   const { openPreferences } = useConsent();
+
+  React.useEffect(() => {
+    trackPageView(`${location.pathname}${location.search}`);
+  }, [location.pathname, location.search]);
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#1a1a1a] font-sans">

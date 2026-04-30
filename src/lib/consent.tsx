@@ -59,9 +59,15 @@ function readStoredConsent(): ConsentState | null {
 }
 
 function removeAnalyticsRuntime() {
-  document.getElementById(GA_SCRIPT_ID)?.remove();
-  delete window.gtag;
-  window.dataLayer = [];
+  if (typeof window.gtag === 'function') {
+    window.gtag('consent', 'update', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+  }
+
   document.cookie.split(';').forEach((part) => {
     const name = part.trim().split('=')[0];
     if (name === '_ga' || name.startsWith('_ga_')) {
@@ -70,16 +76,26 @@ function removeAnalyticsRuntime() {
   });
 }
 
-function loadAnalyticsRuntime() {
-  if (document.getElementById(GA_SCRIPT_ID)) return;
-
+function loadConsentModeRuntime() {
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
+  window.gtag = window.gtag || function gtag(...args: unknown[]) {
     window.dataLayer?.push(args);
   };
 
+  window.gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500,
+  });
+
+  if (document.getElementById(GA_SCRIPT_ID)) return;
+
   window.gtag('js', new Date());
-  window.gtag('config', GA_MEASUREMENT_ID);
+  window.gtag('config', GA_MEASUREMENT_ID, {
+    send_page_view: false,
+  });
 
   const script = document.createElement('script');
   script.id = GA_SCRIPT_ID;
@@ -92,17 +108,24 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
   const [consent, setConsent] = React.useState<ConsentState | null>(null);
   const [isBannerOpen, setIsBannerOpen] = React.useState(false);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
+    loadConsentModeRuntime();
+
     const stored = readStoredConsent();
     setConsent(stored);
     setIsBannerOpen(!stored);
   }, []);
 
   React.useEffect(() => {
-    if (!consent) return;
+    if (!consent || typeof window.gtag !== 'function') return;
 
     if (consent.analytics) {
-      loadAnalyticsRuntime();
+      window.gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
     } else {
       removeAnalyticsRuntime();
     }
