@@ -18,22 +18,13 @@ const navItems = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
-  const { openPreferences } = useConsent();
+  const { consent, openPreferences } = useConsent();
 
   React.useEffect(() => {
+    if (!consent) return;
+
     trackPageView(`${location.pathname}${location.search}`);
-  }, [location.pathname, location.search]);
-
-  React.useEffect(() => {
-    const trackCurrentPage = () => {
-      trackPageView(`${location.pathname}${location.search}`);
-    };
-
-    window.addEventListener('analytics-consent-granted', trackCurrentPage);
-    return () => {
-      window.removeEventListener('analytics-consent-granted', trackCurrentPage);
-    };
-  }, [location.pathname, location.search]);
+  }, [consent, location.pathname, location.search]);
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#1a1a1a] font-sans">
